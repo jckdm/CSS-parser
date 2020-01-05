@@ -6,9 +6,14 @@ from bs4 import BeautifulSoup
 
 def parse_css():
     filename = input("Name of CSS file: ")
+
+    if (filename[len(filename)-4:] != ".css"):
+        print("Invalid file extension")
+        sys.exit(1)
+
     if not os.path.isfile(filename):
         print("Invalid file")
-        sys.exit()
+        sys.exit(2)
 
     with open(filename) as f:
         classes = set([])
