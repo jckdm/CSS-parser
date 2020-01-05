@@ -1,5 +1,6 @@
 # CSS-parser
+# IN PROGRESS
 
-finds unused classes and IDs in HTML/CSS
-
-#in-progress
+1. prompts user for single .css file
+2. parses all .html files in PWD
+3. prints names of unused classes and IDs
