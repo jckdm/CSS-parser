@@ -1,19 +1,19 @@
-import sys
-import os
-import glob
-import re
+from sys import exit
+from os import path
+from glob import glob
+from re import compile
 from bs4 import BeautifulSoup
 
 def parse_css():
-    filename = input("Name of CSS file: ")
+    filename = input("Path to CSS file: ")
 
     if (filename[len(filename)-4:] != ".css"):
         print("Invalid file extension")
-        sys.exit(1)
+        exit(1)
 
-    if not os.path.isfile(filename):
+    if not path.isfile(filename):
         print("Invalid file")
-        sys.exit(2)
+        exit(2)
 
     with open(filename) as f:
         classes = set([])
@@ -45,14 +45,18 @@ def parse_css():
 def parse_html():
     c = set([])
     i = set([])
-    for filename in glob.glob('*.html'):
+
+    flag = False
+
+    for filename in glob('*.html'):
         with open(filename) as f:
+            flag = True
             soup = BeautifulSoup(f, "html.parser")
             classes = [value for element in soup.find_all(class_=True) for value in element["class"]]
 
             tags = set([])
 
-            for tag in soup.find_all(re.compile("^")):
+            for tag in soup.find_all(compile("^")):
                 tags.add(tag.name)
 
             for tag in tags:
@@ -63,5 +67,9 @@ def parse_html():
 
         for item in classes:
             c.add(item)
+
+    if flag == False:
+        print("No .html files in this directory!")
+        exit(3)
 
     return (list(c), list(i))

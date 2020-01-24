@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Jack Adam - HIV</title>
+    <link rel="stylesheet" type="text/css" href=HIV/styles.css>
+    <script type="text/javascript" src="HIV/d3.js"></script>
+    <script type="text/javascript" src="HIV/helpers.js"></script>
+</head>
+<body>
+  <span id="title">what does HIV look like in the USA?</span>
+  <div id="smallSpace"></div>
+
+  <div id="tooltip" class="hidden">
+    <p><span id="value">100</span></p>
+  </div>
+
+  <div class="back">
+    <a id="myWBtn" class="bha">&#8617;&#xFE0E;</a>
+    <div id="myWModal" class="modal">
+        <div class="modal-content">
+          <span class="w_close">&#8617;&#xFE0E;</span>
+          <a id="myArcBtn" class="archive">View Full Archive</a>
+          <div class="gap"> </div>
+          <div id="myArcModal" class="modal">
+              <div class="modal-content">
+                  <span class="arc_close">&#8617;&#xFE0E;</span>
+                  <a id="myPhBtn" class="galleries">Photography</a>
+                  <div class="gap"></div>
+                  <div id="myPhModal" class="modal">
+                      <div class="modal-content">
+                          <span class="ph_close">&#8617;&#xFE0E;</span>
+                          <a id="myPBtn" class="galleries">Projects</a>
+                          <div class="gap"> </div>
+                          <div id="myPModal" class="modal">
+                              <div class="modal-content">
+                                  <span class="p_close">&#8617;&#xFE0E;</span>
+                                  <span data-href="doll-house.html" class="galleries">Doll House</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="dreaming.html" class="galleries">Dreaming</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="eshete-woldeyilma.html" class="galleries">Eshete Woldeyilma</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="soy-boricua.html" class="galleries">Soy Boricua</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="120.html" class="galleries">120</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="to-come-of-age.html" class="galleries">To Come of Age</span>
+                                  <div class="medspace"> </div>
+                              </div>
+                          </div>
+                          <a id="mySWBtn" class="galleries">Selected Works</a>
+                          <div id="mySWModal" class="modal">
+                              <div class="modal-content">
+                                  <span class="sw_close">&#8617;&#xFE0E;</span>
+                                  <span data-href="portraits.html" class="galleries">Portraits</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="self-portraits.html" class="galleries">Self-portraits</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="fashion.html" class="galleries">Fashion</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="still-life.html" class="galleries">Still Life</span>
+                                  <div class="gap"> </div>
+                                  <span data-href="street.html" class="galleries">Street</span>
+                                  <div class="medspace"> </div>
+                              </div>
+                          </div>
+                          <div class="medspace"> </div>
+                      </div>
+                  </div>
+                  <span data-href="paintings.html" class="galleries">Paintings</span>
+                  <div class="gap"> </div>
+                  <span data-href="drawings.html" class="galleries">Drawings</span>
+                  <div class="gap"> </div>
+                  <span data-href="sculpture.html" class="galleries">Sculpture</span>
+                  <div class="gap"> </div>
+                  <span data-href="digital.html" class="galleries">Digital</span>
+                  <div class="gap"> </div>
+                  <span data-href="street-art.html" class="galleries">Street Art</span>
+                  <div class="gap"> </div>
+                  <span data-href="sounds.html" class="galleries">Ambiance</span>
+                  <div class="medspace"> </div>
+              </div>
+          </div>
+          <span class="slash">/</span><span data-href="120_h.html" class="highlite">medium-format film images of urban intimacy</span>
+          <div class="highgap"></div>
+          <span class="slash">/</span><span data-href="HIV.html" class="highlite">interactive data visualization of trends in HIV</span>
+          <div class="highgap"></div>
+          <span class="slash">/</span><span data-href="eshete-woldeyilma_h.html" class="highlite">on-going photo essay exploring community</span>
+          <div class="highgap"></div>
+          <span class="slash">/</span><span data-href="chapbook.html" class="highlite">hand-bound, typeset chapbook </span>
+          <div class="endhigh"></div>
+      </div>
+    </div>
+    <br> <br>
+    <div id="arrSpace"></div>
+      <div id="hugespace"></div>
+      <span data-href="index.html" class="bha" id="backhome">&#8629;&#xFE0E;</span>
+  </div>
+
+    <div class="gray" id="view">
+
+      <ul class="main-navigation">
+        <li><a href="#">Age</a>
+          <ul>
+            <li><a onclick="make1(true);">Age at Diagnosis</a></li>
+            <li><a onclick="make2(true);">Age of Living Persons</a></li>
+            <li><a onclick="make3(true);">Age at Death</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Race</a>
+          <ul>
+            <li><a onclick="make4(true);">Race of Diagnosed Persons</a></li>
+            <li><a onclick="make5(true);">Race of Living Persons</a></li>
+            <li><a onclick="make6(true);">Race of Deceased Persons</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Transmission</a>
+          <ul>
+            <li><a onclick="make7(true);">Transmission Type of Diagnosed Persons</a></li>
+            <li><a onclick="make8(true);">Transmission Type of Living Persons</a></li>
+            <li><a onclick="make9(true);">Transmission Type of Deceased Persons</a></li>
+          </ul>
+      </ul>
+
+      <p id="output"></p>
+
+      <button id="animate" onclick="ani();">PLAY</button>
+
+      <div id="slide">
+        <p>
+          <input id="slider" oninput="make()" type="range" min="2011" max="2017" step="1" orient="horizontal">
+        </p>
+      </div>
+
+      <button id="myBtn">?</button>
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="attr">All data courtesy of U.S. Department of Health & Human Services</p>
+          <p id="attr">Source: <a id="attr" href="https://healthdata.gov" target="_blank">HealthData.gov</a></p>
+          <br>
+	        <p id="attr">Visualized by <a id="attr" href="index.html" target="_blank">Jack Adam</a></p>
+        </div>
+        <div id="space"></div>
+      </div>
+    </div>
+    <script type="text/javascript" src="HIV/load.js"></script>
+    <script type="text/javascript" src="scripts/high-script.js"></script>
+</body>
+</html>
