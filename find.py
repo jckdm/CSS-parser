@@ -42,7 +42,6 @@ def parse_css():
 def parse_html():
     cl = set([])
     id = set([])
-
     flag = False
 
     for filename in glob('*.html'):
@@ -50,32 +49,27 @@ def parse_html():
             flag = True
             while True:
                 c = f.read(1)
+                jump, check1, check2 = None, None, None
                 if (c == 'i'):
-                    last = f.tell()
-                    next = f.read(3)
-                    if (next == 'd="') or (next == "d='"):
-                        found = ''
-                        cc = ''
-                        while (cc != '"') and (cc != "'"):
-                            cc = f.read(1)
-                            found += cc
-                        if (len(found) > 0):
-                            id.add(found[:-1])
-                    else:
-                        f.seek(last)
+                    jump, check1, check2 = 3, 'd="', "d='"
                 elif (c == 'c'):
-                    last = f.tell()
-                    next = f.read(6)
-                    if (next == 'lass="') or (next == "lass='"):
-                        found = ''
-                        cc = ''
-                        while (cc != '"') and (cc != "'"):
-                            cc = f.read(1)
-                            found += cc
-                        if (len(found) > 0):
-                            cl.add(found[:-1])
-                    else:
-                        f.seek(last)
+                    jump, check1, check2 = 6, 'lass="', "lass='"
+
+                last = f.tell()
+                next = f.read(jump)
+
+                if (next == check1) or (next == check2):
+                    cc, found = '', c + next
+                    while (cc != '"') and (cc != "'"):
+                        cc = f.read(1)
+                        found += cc
+                    if (len(found) > 0):
+                        if (found[0] == 'i'):
+                            id.add(found[4:-1])
+                        elif (found[0] == 'c'):
+                            cl.add(found[7:-1])
+                else:
+                    f.seek(last)
                 if not c:
                     return (list(cl), list(id))
 

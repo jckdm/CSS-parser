@@ -3,10 +3,7 @@ import find
 def main():
     c = find.parse_css()
     h = find.parse_html()
-
     flag = False
-
-    print()
 
     for x in c[0]:
         if x not in h[0]:
