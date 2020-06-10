@@ -8,7 +8,7 @@ Path to directory / Path to .css file:
 Do you have more than 1 .html file? (yes/no):
 Path to directory / Path to .html file:
 
-Identified -- unique classes and -- unique IDs.
+Identified () unique classes and () unique IDs.
 
 Unused class:  ------
 Unused ID:     ------
