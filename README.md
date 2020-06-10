@@ -2,6 +2,7 @@
 
 IN PROGRESS
 
+0. Run with: python3 parser.py
 1. prompts user for paths/filenames to singular or multiple .css file(s)
 2. repeats for .html file(s)
 2. parses all files

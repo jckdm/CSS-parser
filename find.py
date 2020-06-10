@@ -4,27 +4,23 @@ from glob import glob
 
 def intro(hc):
     filepath, ext = '', '',
-    type = 'html' if hc == True else 'css'
-    end = -5 if hc == True else -4
+    end = -5 if hc == 'html' else -4
 
-    count = input('Do you have more than 1 .' + type + ' file? (yes/no): ')
+    count = input('Do you have more than 1 .' + hc + ' file? (yes/no): ')
 
     if count.lower() in ('yes', 'y'):
         filepath = input('Path to directory (blank if PWD): ')
-        ext = '*.' + type
-
+        ext = '*.' + hc
         if filepath != '':
             if not path.isdir(filepath):
                 print('Invalid path')
                 exit(1)
 
     elif count.lower() in ('no', 'n'):
-        filepath = input('Path to .' + type + ' file: ')
-
-        if (filepath[end:] != '.' + type):
+        filepath = input('Path to .' + hc + ' file: ')
+        if (filepath[end:] != '.' + hc):
             print('Invalid file')
             exit(2)
-
         if not path.isfile(filepath):
             print('Invalid file')
             exit(3)
@@ -33,12 +29,12 @@ def intro(hc):
         exit(4)
 
     if filepath[-1:] == '/' or filepath == '':
-        return filepath + '*.' + type
+        return filepath + '*.' + hc
     else:
         return filepath
 
 def parse_css():
-    filepath = intro(False)
+    filepath = intro('css')
     classes = set([])
     ids = set([])
 
@@ -72,7 +68,7 @@ def parse_css():
         return (classes, ids)
 
 def parse_html():
-    filepath = intro(True)
+    filepath = intro('html')
     cl = set([])
     id = set([])
 
