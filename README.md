@@ -8,10 +8,10 @@ Path to directory / Path to .css file:
 Do you have more than 1 .html file? (yes/no):
 Path to directory / Path to .html file:
 
-Identified () unique classes and () unique IDs.
+Identified [ ] unique classes and [ ] unique IDs.
 
-Unused class:  ------
-Unused ID:     ------
+Unused class:  [    ]
+Unused ID:     [    ]
 ```
 
 0. prompts user for path to/filename of singular or multiple .css file(s)
