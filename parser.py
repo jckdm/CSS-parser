@@ -5,6 +5,8 @@ def main():
     h = find.parse_html()
     flag = False
 
+    print('\nIdentified ' + str(len(c[0])) + ' unique classes and ' + str(len(c[1])) + ' unique IDs.\n')
+
     for x in c[0]:
         if x not in h[0]:
             flag = True;

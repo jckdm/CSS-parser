@@ -2,77 +2,105 @@ from sys import exit
 from os import path
 from glob import glob
 
+def intro(hc):
+    filepath, ext = '', '',
+    type = 'html' if hc == True else 'css'
+    end = -5 if hc == True else -4
+
+    count = input('Do you have more than 1 .' + type + ' file? (yes/no): ')
+
+    if count.lower() in ('yes', 'y'):
+        filepath = input('Path to directory (blank if PWD): ')
+        ext = '*.' + type
+
+        if filepath != '':
+            if not path.isdir(filepath):
+                print('Invalid path')
+                exit(1)
+
+    elif count.lower() in ('no', 'n'):
+        filepath = input('Path to .' + type + ' file: ')
+
+        if (filepath[end:] != '.' + type):
+            print('Invalid file')
+            exit(2)
+
+        if not path.isfile(filepath):
+            print('Invalid file')
+            exit(3)
+    else:
+        print('Invalid response')
+        exit(4)
+
+    if filepath[-1:] == '/' or filepath == '':
+        return filepath + '*.' + type
+    else:
+        return filepath
+
 def parse_css():
-    filename = input('Path to CSS file: ')
+    filepath = intro(False)
+    classes = set([])
+    ids = set([])
 
-    if (filename[len(filename)-4:] != '.css'):
-        print('Invalid file extension')
-        exit(1)
-
-    if not path.isfile(filename):
-        print('Invalid file')
-        exit(2)
-
-    with open(filename) as f:
-        classes = set([])
-        ids = set([])
-        while True:
-            c = f.read(1)
-
-            if (c == '.') or (c == '#'):
-                found = '' + c
-                cc = ''
-                while (cc != '{') and (cc != ','):
-                    cc = f.read(1)
-                    if (cc == ';') or (cc == ':'):
-                        found = ''
-                        break
-                    elif (cc != '{') and (cc != ','):
-                        found += cc
-                if (len(found) > 0):
-                    found = found.strip()
-                    if (found[0] == '.'):
-                        classes.add(found[1:])
-                    elif (found[0] == '#'):
-                        ids.add(found[1:])
-            if not c:
-                return (classes, ids)
-
-
-def parse_html():
-    cl = set([])
-    id = set([])
-    flag = False
-
-    for filename in glob('*.html'):
-        with open(filename) as f:
-            flag = True
+    for file in glob(filepath):
+        with open(file) as f:
+            print('Read ' + file)
             while True:
                 c = f.read(1)
-                jump, check1, check2 = None, None, None
-                if (c == 'i'):
-                    jump, check1, check2 = 3, 'd="', "d='"
-                elif (c == 'c'):
-                    jump, check1, check2 = 6, 'lass="', "lass='"
-
-                last = f.tell()
-                next = f.read(jump)
-
-                if (next == check1) or (next == check2):
-                    cc, found = '', c + next
-                    while (cc != '"') and (cc != "'"):
+                if (c == '.') or (c == '#'):
+                    cc, found = '', '' + c
+                    while (cc != '{') and (cc != ','):
                         cc = f.read(1)
-                        found += cc
+                        if (cc == ';') or (cc == ':'):
+                            found = ''
+                            break
+                        elif (cc != '{') and (cc != ','):
+                            found += cc
                     if (len(found) > 0):
-                        if (found[0] == 'i'):
-                            id.add(found[4:-1])
-                        elif (found[0] == 'c'):
-                            cl.add(found[7:-1])
-                else:
-                    f.seek(last)
+                        found = found.strip()
+                        if (found[0] == '.'):
+                            classes.add(found[1:])
+                        elif (found[0] == '#'):
+                            ids.add(found[1:])
                 if not c:
-                    return (list(cl), list(id))
+                    break
 
-    if flag == False:
+    if not classes or not ids:
+        print('No .css files in this directory!')
+        exit(5)
+    else:
+        return (classes, ids)
+
+def parse_html():
+    filepath = intro(True)
+    cl = set([])
+    id = set([])
+
+    for filename in glob(filepath):
+        with open(filename) as f:
+            print('Read ' + filename)
+
+            for line in f:
+                words = line.split()
+                for piece in words:
+                    found, start = '', None
+                    if piece[:2] == 'id':
+                        start = 4
+                    elif piece[:5] == 'class':
+                        start = 7
+
+                    if start != None:
+                        for char in piece[start:]:
+                            if (char != "'") and (char != '"'):
+                                found += char
+                            else:
+                                if start == 4:
+                                    id.add(found)
+                                elif start == 7:
+                                    cl.add(found)
+
+    if not cl or not id:
         print('No .html files in this directory!')
-        exit(3)
+        exit(6)
+    else:
+        return (list(cl), list(id))
