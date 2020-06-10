@@ -3,10 +3,10 @@
 ``` bash
 $ python3 parser.py
 Do you have more than 1 .css file? (yes/no):
-Path to directory // Path to .css file:
+Path to directory / Path to .css file:
 
 Do you have more than 1 .html file? (yes/no):
-Path to directory // Path to .html file:
+Path to directory / Path to .html file:
 
 Identified -- unique classes and -- unique IDs.
 
@@ -20,4 +20,4 @@ Unused ID:     ------
 3. prints names of unused classes and IDs
 
 TODO:
-1. print name of .css file alongside each unused class/ID
+0. print name of .css file alongside each unused class/ID
