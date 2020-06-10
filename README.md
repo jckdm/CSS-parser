@@ -1,11 +1,22 @@
 # CSS-parser
 
-IN PROGRESS
+``` bash
+$ python3 parser.py
+Do you have more than 1 .css file? (yes/no):
+Path to directory // Path to .css file:
 
-0. Run with: python3 parser.py
-1. prompts user for paths/filenames to singular or multiple .css file(s)
-2. repeats for .html file(s)
-2. parses all files
+Do you have more than 1 .html file? (yes/no):
+Path to directory // Path to .html file:
+
+Identified -- unique classes and -- unique IDs.
+
+Unused class:  ------
+Unused ID:     ------
+```
+
+0. prompts user for path to/filename of singular or multiple .css file(s)
+1. prompts user for path to/filename of singular or multiple .html file(s)
+2. parses files
 3. prints names of unused classes and IDs
 
 TODO:
