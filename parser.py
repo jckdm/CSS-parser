@@ -33,7 +33,7 @@ def parse_css():
 
     if not classes and not ids:
         print('No .css files in this directory!')
-        exit(5)
+        exit(1)
     else:
         return (remove_dups(classes), remove_dups(ids))
 
@@ -65,6 +65,6 @@ def parse_html():
 
     if not cl and not id:
         print('No .html files in this directory!')
-        exit(6)
+        exit(2)
     else:
         return (list(cl), list(id))
