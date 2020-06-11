@@ -4,33 +4,32 @@ import helper
 
 def parse_css():
     filepath = helper.intro('css')
-    classes = {}
-    ids = {}
+    classes, ids, found, flag = {}, {}, '', False
 
     for file in glob(filepath):
         with open(file) as f:
             print('Read ' + file)
-            while True:
-                c = f.read(1)
-                if (c == '.') or (c == '#'):
-                    cc, found = '', '' + c
-                    while (cc != '{') and (cc != ','):
-                        cc = f.read(1)
-                        if (cc == ';') or (cc == ':'):
-                            found = ''
-                            break
-                        elif (cc != '{') and (cc != ','):
-                            found += cc
-                    if (len(found) > 0):
-                        found = found.strip()
-                        if (found[0] == '.'):
-                            classes[found[1:]] = file
-                        elif (found[0] == '#'):
-                            ids[found[1:]] = file
-                if not c:
-                    break
 
-    if not classes or not ids:
+            for line in f:
+                for c in line:
+                    if (c == '.') or (c == '#'):
+                        flag = True
+                    if (c == ';') or (c == ':'):
+                        flag = False
+                        found = ''
+                    if (c == '{') or (c == ','):
+                        if (len(found) > 0):
+                            found = found.strip()
+                            if (found[0] == '.'):
+                                classes[found[1:]] = file
+                            elif (found[0] == '#'):
+                                ids[found[1:]] = file
+                        flag = False
+                        found = ''
+                    if flag == True:
+                        found += c
+
+    if not classes and not ids:
         print('No .css files in this directory!')
         exit(5)
     else:
@@ -38,8 +37,7 @@ def parse_css():
 
 def parse_html():
     filepath = helper.intro('html')
-    cl = set([])
-    id = set([])
+    cl, id = set([]), set([])
 
     for filename in glob(filepath):
         with open(filename) as f:
@@ -53,7 +51,6 @@ def parse_html():
                         start = 4
                     elif piece[:5] == 'class':
                         start = 7
-
                     if start != None:
                         for char in piece[start:]:
                             if (char != "'") and (char != '"'):
@@ -64,7 +61,7 @@ def parse_html():
                                 elif start == 7:
                                     cl.add(found)
 
-    if not cl or not id:
+    if not cl and not id:
         print('No .html files in this directory!')
         exit(6)
     else:
