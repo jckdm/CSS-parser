@@ -1,8 +1,8 @@
-import parser
+from parser import parse_css, parse_html
 
 def main():
-    c = parser.parse_css()
-    h = parser.parse_html()
+    c = parse_css()
+    h = parse_html()
     flag = False
 
     print(f'Identified {c[0][1]} unique classes and {c[1][1]} unique IDs.\n')

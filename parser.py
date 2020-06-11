@@ -1,10 +1,10 @@
 from sys import exit
 from glob import glob
-import helper
+from helper import intro, remove_dups
 from re import match
 
 def parse_css():
-    filepath = helper.intro('css')
+    filepath = intro('css')
     classes, ids, found, flag = {}, {}, '', False
 
     for file in glob(filepath):
@@ -35,10 +35,10 @@ def parse_css():
         print('No .css files in this directory!')
         exit(5)
     else:
-        return (helper.remove_dups(classes), helper.remove_dups(ids))
+        return (remove_dups(classes), remove_dups(ids))
 
 def parse_html():
-    filepath = helper.intro('html')
+    filepath = intro('html')
     cl, id = set([]), set([])
 
     for filename in glob(filepath):
