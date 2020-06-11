@@ -33,7 +33,9 @@ def intro(hc):
 
 def remove_dups(d):
     r = {}
+    l = 0
     for k, v in d.items():
         if v not in r.keys():
             r[k] = v
-    return r
+            l += 1
+    return (r, l)
