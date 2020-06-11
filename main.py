@@ -5,17 +5,17 @@ def main():
     h = parser.parse_html()
     flag = False
 
-    print('\nIdentified ' + str(len(c[0])) + ' unique classes and ' + str(len(c[1])) + ' unique IDs.\n')
+    print('Identified ' + str(len(c[0])) + ' unique classes and ' + str(len(c[1])) + ' unique IDs.\n')
 
-    for key, value in c[0].items():
-        if key not in h[0]:
+    for ID, file in c[0].items():
+        if ID not in h[0]:
             flag = True;
-            print(f'Unused class:  {key} : {value}')
+            print(f'Unused class:  {ID} : {file}')
 
-    for y in c[1]:
-        if y not in h[1]:
+    for ID, file in c[1].items():
+        if ID not in h[1]:
             flag = True;
-            print('Unused ID:     ' + y)
+            print(f'Unused ID:     {ID} : {file}')
 
     if flag == False:
         print('No unused classes nor IDs!')
