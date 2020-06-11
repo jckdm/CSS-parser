@@ -10,14 +10,14 @@ Path to directory / Path to .html file:
 
 Identified [ ] unique classes and [ ] unique IDs.
 
-Unused class:  [    ]
-Unused ID:     [    ]
+Unused class:  [    ] : file1.css
+Unused ID:     [    ] : file2.css
 ```
 
 0. prompts user for path to/filename of singular or multiple .css file(s)
 1. prompts user for path to/filename of singular or multiple .html file(s)
 2. parses files
-3. prints names of unused classes and IDs
+3. prints names of unused classes and IDs and corresponding file
 
 TODO:
-0. print name of .css file alongside each unused class/ID
+0. print line number along with .css file name

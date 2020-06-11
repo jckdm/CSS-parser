@@ -30,3 +30,10 @@ def intro(hc):
         return filepath + '*.' + hc
     else:
         return filepath
+
+def remove_dups(d):
+    r = {}
+    for k, v in d.items():
+        if v not in r.keys():
+            r[k] = v
+    return r

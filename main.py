@@ -7,10 +7,10 @@ def main():
 
     print('\nIdentified ' + str(len(c[0])) + ' unique classes and ' + str(len(c[1])) + ' unique IDs.\n')
 
-    for x in c[0]:
-        if x not in h[0]:
+    for key, value in c[0].items():
+        if key not in h[0]:
             flag = True;
-            print('Unused class:  ' + x)
+            print(f'Unused class:  {key} : {value}')
 
     for y in c[1]:
         if y not in h[1]:

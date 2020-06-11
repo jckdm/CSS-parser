@@ -4,8 +4,8 @@ import helper
 
 def parse_css():
     filepath = helper.intro('css')
-    classes = set([])
-    ids = set([])
+    classes = {}
+    ids = {}
 
     for file in glob(filepath):
         with open(file) as f:
@@ -24,9 +24,9 @@ def parse_css():
                     if (len(found) > 0):
                         found = found.strip()
                         if (found[0] == '.'):
-                            classes.add(found[1:])
+                            classes[found[1:]] = file
                         elif (found[0] == '#'):
-                            ids.add(found[1:])
+                            ids[found[1:]] = file
                 if not c:
                     break
 
@@ -34,7 +34,7 @@ def parse_css():
         print('No .css files in this directory!')
         exit(5)
     else:
-        return (classes, ids)
+        return (helper.remove_dups(classes), helper.remove_dups(ids))
 
 def parse_html():
     filepath = helper.intro('html')
