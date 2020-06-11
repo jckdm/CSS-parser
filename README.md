@@ -1,7 +1,7 @@
 # CSS-parser
 
 ``` bash
-$ python3 parser.py
+$ python3 main.py
 Do you have more than 1 .css file? (yes/no):
 Path to directory / Path to .css file:
 
