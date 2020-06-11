@@ -21,15 +21,13 @@ def parse_css():
                     if (c == '{') or (c == ','):
                         if (len(found) > 0):
                             found = found.strip()
-
-                            if not match('(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*\s*', found):
-                                break
-                            elif (found[0] == '.'):
-                                classes[found[1:]] = file + ', line ' + str(num)
-                            elif (found[0] == '#'):
-                                ids[found[1:]] = file + ', line ' + str(num)
-                        flag = False
-                        found = ''
+                            if match('(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*', found):
+                                if (found[0] == '.'):
+                                    classes[found[1:]] = file + ', line ' + str(num)
+                                elif (found[0] == '#'):
+                                    ids[found[1:]] = file + ', line ' + str(num)
+                            flag = False
+                            found = ''
                     if flag == True:
                         found += c
 
