@@ -1,4 +1,4 @@
-# CSS-parser
+# CSS parser
 
 ``` bash
 $ python3 main.py
