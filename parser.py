@@ -1,6 +1,7 @@
 from sys import exit
 from glob import glob
 import helper
+from re import match
 
 def parse_css():
     filepath = helper.intro('css')
@@ -10,7 +11,7 @@ def parse_css():
         with open(file) as f:
             print('Read ' + file)
 
-            for line in f:
+            for num, line in enumerate(f, 1):
                 for c in line:
                     if (c == '.') or (c == '#'):
                         flag = True
@@ -20,10 +21,13 @@ def parse_css():
                     if (c == '{') or (c == ','):
                         if (len(found) > 0):
                             found = found.strip()
-                            if (found[0] == '.'):
-                                classes[found[1:]] = file
+
+                            if not match('(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*\s*', found):
+                                break
+                            elif (found[0] == '.'):
+                                classes[found[1:]] = file + ', line ' + str(num)
                             elif (found[0] == '#'):
-                                ids[found[1:]] = file
+                                ids[found[1:]] = file + ', line ' + str(num)
                         flag = False
                         found = ''
                     if flag == True:
