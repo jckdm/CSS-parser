@@ -10,8 +10,8 @@ Path to directory / Path to .html file:
 
 Identified [ ] unique classes and [ ] unique IDs.
 
-Unused class:  [    ] : file1.css, line 00
-Unused ID:     [    ] : file2.css, line 000
+Unused class:  .[    ] : file1.css :  line 0, 00
+Unused ID:     #[    ] : file2.css : line 000, 0
 ```
 
 0. prompts user for path to/filename of singular or multiple .css file(s)

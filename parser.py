@@ -9,7 +9,7 @@ def parse_css():
 
     for file in glob(filepath):
         with open(file) as f:
-            print('Read ' + file)
+            print(f'Read {file}')
 
             for num, line in enumerate(f, 1):
                 for c in line:
@@ -22,10 +22,17 @@ def parse_css():
                         if (len(found) > 0):
                             found = found.strip()
                             if match('(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*', found):
+                                found += ' : ' + file
                                 if (found[0] == '.'):
-                                    classes[found[1:]] = file + ', line ' + str(num)
+                                    if found in classes:
+                                        classes[found] += ', ' + str(num)
+                                    else:
+                                        classes[found] = ': line ' + str(num)
                                 elif (found[0] == '#'):
-                                    ids[found[1:]] = file + ', line ' + str(num)
+                                    if found in ids:
+                                        ids[found] += ', ' + str(num)
+                                    else:
+                                        ids[found] = ': line ' + str(num)
                             flag = False
                             found = ''
                     if flag == True:
@@ -41,18 +48,18 @@ def parse_html():
     filepath = intro('html')
     cl, id = set([]), set([])
 
-    for filename in glob(filepath):
-        with open(filename) as f:
-            print('Read ' + filename)
+    for file in glob(filepath):
+        with open(file) as f:
+            print(f'Read {file}')
 
             for line in f:
                 words = line.split()
                 for piece in words:
                     found, start = '', None
                     if piece[:2] == 'id':
-                        start = 4
+                        start, found = 4, '#'
                     elif piece[:5] == 'class':
-                        start = 7
+                        start, found = 7, '.'
                     if start != None:
                         for char in piece[start:]:
                             if (char != "'") and (char != '"'):
