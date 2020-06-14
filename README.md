@@ -11,7 +11,7 @@ Read [    ].html
 Identified [ ] unique classes and [ ] unique IDs.
 
 Unused class:  .[    ] : file1.css,  line 0, 00
-Unused ID:    `#[    ] : file2.css, line 000, 0
+Unused ID:     #[    ] : file2.css, line 000, 0
 
 May I remove these unused rules and output new .css files? (yes/no):
 Cleaned [    ].css
