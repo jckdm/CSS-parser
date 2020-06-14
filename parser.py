@@ -15,32 +15,34 @@ def parse_css():
                 for c in line:
                     if (c == '.') or (c == '#'):
                         flag = True
+                    # removing the check for : handles some psuedo-classes, but...
                     if (c == ';') or (c == ':'):
                         flag = False
                         found = ''
                     if (c == '{') or (c == ','):
-                        if (len(found) > 0):
+                        if len(found) > 0:
                             found = found.strip()
                             if match('(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*', found):
                                 found += ' : ' + file
+                                if line == '{\n':
+                                    num -= 1
                                 if (found[0] == '.'):
                                     if found in classes:
                                         classes[found] += ', ' + str(num)
                                     else:
-                                        classes[found] = ': line ' + str(num)
+                                        classes[found] = ', line ' + str(num)
                                 elif (found[0] == '#'):
                                     if found in ids:
                                         ids[found] += ', ' + str(num)
                                     else:
-                                        ids[found] = ': line ' + str(num)
+                                        ids[found] = ', line ' + str(num)
                             flag = False
                             found = ''
-                    if flag == True:
+                    if flag:
                         found += c
 
     if not classes and not ids:
-        print('No .css files in this directory!')
-        exit(1)
+        exit('No .css files in this directory!')
     else:
         return (remove_dups(classes), remove_dups(ids))
 
@@ -71,7 +73,6 @@ def parse_html():
                                     cl.add(found)
 
     if not cl and not id:
-        print('No .html files in this directory!')
-        exit(2)
+        exit('No .html files in this directory!')
     else:
         return (list(cl), list(id))

@@ -1,4 +1,5 @@
 from os import path
+from re import match
 
 def intro(hc):
     filepath, ext = '', '',
@@ -11,20 +12,16 @@ def intro(hc):
         ext = '*.' + hc
         if filepath != '':
             if not path.isdir(filepath):
-                print('Invalid path')
-                exit(1)
+                exit('Invalid path')
 
     elif count.lower() in ('no', 'n'):
         filepath = input('Path to .' + hc + ' file: ')
         if (filepath[end:] != '.' + hc):
-            print('Invalid file')
-            exit(2)
+            exit('Invalid file')
         if not path.isfile(filepath):
-            print('Invalid file')
-            exit(3)
+            exit('Invalid file')
     else:
-        print('Invalid response')
-        exit(4)
+        exit('Invalid response')
 
     if filepath[-1:] == '/' or filepath == '':
         return filepath + '*.' + hc
@@ -39,3 +36,29 @@ def remove_dups(d):
             r[k] = v
             l += 1
     return (r, l)
+
+def solo(line):
+    pattern = '(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*'
+    flag, found, count = False, '', 0
+    for c in line:
+        if (c == '.') or (c == '#'):
+            flag = True
+        if (c == ';') or (c == ':'):
+            flag = False
+            found = ''
+        if (c == '{') or (c == ','):
+            if len(found) > 0:
+                if match(pattern, found):
+                    count += 1
+        if flag:
+            found += c
+    if count == 0:
+        if match(pattern, found):
+            count += 1
+    if count == 1:
+        return True
+    elif count > 1:
+        return False
+
+def comma(w):
+    return w[:-1] if w[-1:] == ',' else w
