@@ -29,8 +29,7 @@ def intro(hc):
         return filepath
 
 def remove_dups(d):
-    r = {}
-    l = 0
+    r, l = {}, 0
     for k, v in d.items():
         if v not in r.keys():
             r[k] = v
