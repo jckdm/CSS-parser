@@ -52,10 +52,9 @@ def solo(line):
                     count += 1
         if flag:
             found += c
-    if count == 0:
+    if count == 0 or count == 1:
         if match(pattern, found):
             count += 1
-    if count == 1:
         return True
     elif count > 1:
         return False

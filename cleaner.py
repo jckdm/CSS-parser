@@ -42,6 +42,8 @@ def clean(u):
                         ll = len(l)
                         if l[ll - 1] == '{':
                             l[ll - 2] = comma(l[ll - 2])
+                        else:
+                            l[ll - 1] = comma(l[ll - 1])
                         line = ' '.join(l) + '\n'
                         index += 1
                         multiFlag = False
