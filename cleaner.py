@@ -1,61 +1,63 @@
 from helper import solo, comma
 
-def clean(u):
-    nums = {}
-    file = ''
+def clean(u, fn, fc):
+    nums, numItems = [], []
+    for _ in range(fc):
+        nums.append({})
+        numItems.append(0)
+
     for key, value in u.items():
-        x, y = key.split(), value.split()
-        rule, file = x[0], x[2]
-
-        for i in range(len(y) - 2):
-            if y[i+2][-1:] == ',':
-                nums[int(y[i+2][:-1])] = rule
+        x, y = key.split(), value.split()[2:]
+        rule = x[0]
+        ind = fn.index(x[2])
+        for i in range(len(y)):
+            if y[i][-1:] == ',':
+                nums[ind][int(y[i][:-1])] = rule
             else:
-                nums[int(y[i+2])] = rule
+                nums[ind][int(y[i])] = rule
+            numItems[ind] += 1
 
-    nums = sorted(nums.items())
-    numItems = len(nums)
-    index = 0
+    for i in range(fc):
+        nums[i] = sorted(nums[i].items())
+        index = 0
+        file = fn[i]
+        with open(file) as f:
+            print(f'Cleaned {file}')
 
-    with open(file) as f:
-        print(f'Cleaned {file}')
-
-        with open(file[:-4] + '-clean.css', 'w') as newF:
-            soloFlag, mediaFlag, multiFlag = False, False, False
-            for num, line in enumerate(f, 1):
-                if index < numItems:
-                    if num == nums[index][0]:
-                        x = solo(line)
-                        if x:
-                            soloFlag = True
-                        if not x:
-                            multiFlag = True
-                            l = line.split()
+            with open(file[:-4] + '-clean.css', 'w') as newF:
+                soloFlag, mediaFlag, multiFlag = False, False, False
+                for num, line in enumerate(f, 1):
+                    if index < numItems[i]:
+                        if num == nums[i][index][0]:
+                            x = solo(line)
+                            if x:
+                                soloFlag = True
+                            if not x:
+                                multiFlag = True
+                                l = line.split()
+                                ll = len(l)
+                        if multiFlag:
+                            for word in l:
+                                cWord = comma(word)
+                                if cWord == nums[i][index][1] or word == nums[i][index][1]:
+                                    l.remove(word)
                             ll = len(l)
-                    if multiFlag:
-                        for word in l:
-                            cWord = comma(word)
-                            if cWord == nums[index][1]:
-                                l.remove(cWord)
-                            elif word == nums[index][1]:
-                                l.remove(word)
-                        ll = len(l)
-                        if l[ll - 1] == '{':
-                            l[ll - 2] = comma(l[ll - 2])
-                        else:
-                            l[ll - 1] = comma(l[ll - 1])
-                        line = ' '.join(l) + '\n'
-                        index += 1
-                        multiFlag = False
-                    if line[:6] == '@media':
-                        mediaFlag = True
-                    if soloFlag:
-                        for c in line:
-                            if c == '}':
-                                soloFlag = False
-                                index += 1
-                    elif not soloFlag:
-                        newF.write(line)
-            if mediaFlag:
-                newF.write('}')
-        newF.close()
+                            if l[ll - 1] == '{':
+                                l[ll - 2] = comma(l[ll - 2])
+                            else:
+                                l[ll - 1] = comma(l[ll - 1])
+                            line = ' '.join(l) + '\n'
+                            index += 1
+                            multiFlag = False
+                        if line[:6] == '@media':
+                            mediaFlag = True
+                        if soloFlag:
+                            for c in line:
+                                if c == '}':
+                                    soloFlag = False
+                                    index += 1
+                        elif not soloFlag:
+                            newF.write(line)
+                if mediaFlag:
+                    newF.write('}')
+            newF.close()

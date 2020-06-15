@@ -21,10 +21,11 @@ Cleaned [    ].css
 1. prompts user for path to/filename of singular or multiple .html file(s)
 2. parses files
 3. prints unused classes and IDs, corresponding files and line numbers
-4. [BETA] re-writes css files without unused classes and IDs
+4. re-writes css files without unused classes and IDs
 
 TODO:
 
 0. handle :hover, :focus, etc.
-1. handle re-writing multiple files
-2. thoroughly edge case re-writing stage
+1. thoroughly edge case re-writing stage
+2. edgecase: multi-word file names LOL
+3. don't remove comments
