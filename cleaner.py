@@ -25,7 +25,7 @@ def clean(u, fn, fc):
             print(f'Cleaned {file}')
 
             with open(file[:-4] + '-clean.css', 'w') as newF:
-                soloFlag, mediaFlag, multiFlag = False, False, False
+                soloFlag, mediaFlag, multiFlag, newline = False, False, False, False
                 for num, line in enumerate(f, 1):
                     if index < numItems[i]:
                         if num == nums[i][index][0]:
@@ -57,7 +57,9 @@ def clean(u, fn, fc):
                                     soloFlag = False
                                     index += 1
                         elif not soloFlag:
-                            newF.write(line)
+                            if not newline or line != '\n':
+                                newF.write(line)
+                            newline = True if line == '\n' else False
                 if mediaFlag:
                     newF.write('}')
             newF.close()
