@@ -7,8 +7,6 @@ def main():
     h = parse_html()
     unused, fileNames, fileCount = {}, [], 0
 
-    print(f'Identified {c[0][1]} unique classes and {c[1][1]} unique IDs.\n')
-
     for cla, num in c[0][0].items():
         x = cla.split()
         if x[0] not in h[0]:
@@ -16,7 +14,6 @@ def main():
             if x[2] not in fileNames:
                 fileNames.append(x[2])
                 fileCount += 1
-            print(f'Unused class:  {cla}{num}')
 
     for ID, num in c[1][0].items():
         y = ID.split()
@@ -25,7 +22,19 @@ def main():
             if y[2] not in fileNames:
                 fileNames.append(y[2])
                 fileCount += 1
-            print(f'Unused ID:     {ID}{num}')
+
+    print(f'Identified {c[0][1]} unique classes and {c[1][1]} unique IDs.\n')
+
+    for rule, num in unused.items():
+        z = rule.split()
+        if ':' in z[0]:
+            zz = z[0].split(':')
+            if zz[0] + ' : ' + z[2] not in unused:
+                continue
+        if z[0][0] == '.':
+            print(f'Unused class:  {rule}{num}')
+        elif z[0][0] == '#':
+            print(f'Unused ID:     {rule}{num}')
 
     if not unused:
         print('No unused classes nor IDs!')

@@ -26,8 +26,7 @@ Cleaned file2.css
 
 TODO:
 
-0. handle :hover, :focus, etc.
-1. thoroughly edge case re-writing stage
-2. edgecase: multi-word file names LOL
-3. comments disappearing in media queries?
-4. remove extra newlines
+0. thoroughly edge case re-writing stage
+1. handle multi-word file names (is this even allowed?)
+2. fix comments disappearing in media queries?
+3. remove extra newlines

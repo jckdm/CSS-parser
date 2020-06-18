@@ -42,7 +42,7 @@ def solo(line):
     for c in line:
         if (c == '.') or (c == '#'):
             flag = True
-        if (c == ';') or (c == ':'):
+        if (c == ';'):
             flag = False
             found = ''
         if (c == '{') or (c == ','):

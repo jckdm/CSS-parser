@@ -15,8 +15,7 @@ def parse_css():
                 for c in line:
                     if (c == '.') or (c == '#'):
                         flag = True
-                    # removing the check for : handles some psuedo-classes, but...
-                    if (c == ';') or (c == ':'):
+                    if (c == ';'):
                         flag = False
                         found = ''
                     if (c == '{') or (c == ','):
