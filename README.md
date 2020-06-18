@@ -26,7 +26,6 @@ Cleaned file2.css
 
 TODO:
 
-0. thoroughly edge case re-writing stage
-1. handle multi-word file names (is this even allowed?)
-2. fix comments disappearing in media queries?
-3. remove extra newlines
+0. thoroughly edgecase re-writing stage
+1. fix comments disappearing in media queries?
+2. remove extra newlines
