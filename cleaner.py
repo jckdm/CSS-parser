@@ -1,11 +1,9 @@
 from helper import solo, comma
 
 def clean(u, fn, fc):
-    nums, numItems = [], []
     # pre-populate arrays
-    for _ in range(fc):
-        nums.append({})
-        numItems.append(0)
+    nums = [{}] * fc
+    numItems = [0] * fc
 
     # extract line numbers, filenames
     for key, value in u.items():
