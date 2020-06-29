@@ -32,5 +32,5 @@ Wrote file2-clean.css
 TODO:
 
 0. thoroughly edgecase re-writing stage
-1. fix comments disappearing in media queries?
-2. comment your code, dummy
+1. something is wrong with cleaning multiple files
+2. fix comments disappearing in media queries?

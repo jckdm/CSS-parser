@@ -3,10 +3,12 @@ from cleaner import clean
 from sys import exit
 
 def main():
+    # parse the files
     c = parse_css()
     h = parse_html()
     unused, fileNames, css, fileCount = {}, [], [], 0
 
+    # identify unused classes
     for cla, num in c[0][0].items():
         x = cla.split()
         if ':' not in x[0]:
@@ -14,6 +16,7 @@ def main():
         if x[0] not in h[0][0]:
             unused[cla] = num
 
+    # identify unused IDs
     for ID, num in c[1][0].items():
         y = ID.split()
         if ':' not in y[0]:
@@ -23,6 +26,7 @@ def main():
 
     print(f'\nIdentified {c[0][1]} unique classes and {c[1][1]} unique IDs.\n')
 
+    # identify undefined classes and IDs
     for d in h:
         for dd in d:
             for rule, num in dd.items():
@@ -33,6 +37,7 @@ def main():
 
     final = dict(unused)
 
+    # identify pseudoclasses
     for rule, num in unused.items():
         z = rule.split()
         if z[2] not in fileNames:
