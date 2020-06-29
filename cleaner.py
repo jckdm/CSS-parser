@@ -22,24 +22,22 @@ def clean(u, fn, fc):
         index = 0
         file = fn[i]
         with open(file) as f:
-            print(f'Cleaned {file}')
+            new = file[:-4] + '-clean.css'
+            print(f'Wrote {new}')
 
-            with open(file[:-4] + '-clean.css', 'w') as newF:
+            with open(new, 'w') as newF:
                 soloFlag, mediaFlag, multiFlag, newline = False, False, False, False
                 for num, line in enumerate(f, 1):
                     if index < numItems[i]:
                         if num == nums[i][index][0]:
                             x = solo(line)
-                            if x:
-                                soloFlag = True
-                            if not x:
-                                multiFlag = True
-                                l = line.split()
-                                ll = len(l)
+                            soloFlag = x
+                            multiFlag = not(x)
                         if multiFlag:
+                            l = line.split()
+                            ll = len(l)
                             for word in l:
-                                cWord = comma(word)
-                                if cWord == nums[i][index][1] or word == nums[i][index][1]:
+                                if comma(word) == nums[i][index][1] or word == nums[i][index][1]:
                                     l.remove(word)
                             ll = len(l)
                             if l[ll - 1] == '{':

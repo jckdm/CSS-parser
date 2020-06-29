@@ -13,28 +13,31 @@ def parse_css():
 
             for num, line in enumerate(f, 1):
                 for c in line:
-                    if (c == '.') or (c == '#'):
+                    if c == '.' or c == '#':
                         flag = True
-                    if (c == ';'):
+                    if c == ';':
                         flag = False
                         found = ''
-                    if (c == '{') or (c == ','):
+                    if c == '{' or c == ',':
                         if len(found) > 0:
                             found = found.strip()
                             if match('(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*', found):
                                 found += ' : ' + file
                                 if line == '{\n':
                                     num -= 1
-                                if (found[0] == '.'):
+                                sNum = str(num)
+                                if found[0] == '.':
                                     if found in classes:
-                                        classes[found] += ', ' + str(num)
+                                        if sNum not in classes[found]:
+                                            classes[found] += ', ' + sNum
                                     else:
-                                        classes[found] = ', line ' + str(num)
-                                elif (found[0] == '#'):
+                                        classes[found] = ', line ' + sNum
+                                elif found[0] == '#':
                                     if found in ids:
-                                        ids[found] += ', ' + str(num)
+                                        if sNum not in ids[found]:
+                                            ids[found] += ', ' + sNum
                                     else:
-                                        ids[found] = ', line ' + str(num)
+                                        ids[found] = ', line ' + sNum
                             flag = False
                             found = ''
                     if flag:
@@ -47,13 +50,15 @@ def parse_css():
 
 def parse_html():
     filepath = intro('html')
-    cl, id = set([]), set([])
+    cl, id, fc = [], [], 0
 
     for file in glob(filepath):
         with open(file) as f:
             print(f'Read {file}')
+            cl.append({})
+            id.append({})
 
-            for line in f:
+            for num, line in enumerate(f, 1):
                 words = line.split()
                 for piece in words:
                     found, start = '', None
@@ -63,15 +68,17 @@ def parse_html():
                         start, found = 7, '.'
                     if start != None:
                         for char in piece[start:]:
-                            if (char != "'") and (char != '"'):
+                            if char != "'" and char != '"':
                                 found += char
                             else:
                                 if start == 4:
-                                    id.add(found)
+                                    id[fc][found] = file
                                 elif start == 7:
-                                    cl.add(found)
+                                    cl[fc][found] = file
+                                break
+        fc += 1
 
     if not cl and not id:
         exit('No .html files in this directory!')
     else:
-        return (list(cl), list(id))
+        return (cl, id)

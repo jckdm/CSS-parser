@@ -16,7 +16,7 @@ def intro(hc):
 
     elif count.lower() in ('no', 'n'):
         filepath = input('Path to .' + hc + ' file: ')
-        if (filepath[end:] != '.' + hc):
+        if filepath[end:] != '.' + hc:
             exit('Invalid file')
         if not path.isfile(filepath):
             exit('Invalid file')
@@ -40,12 +40,12 @@ def solo(line):
     pattern = '(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*'
     flag, found, count = False, '', 0
     for c in line:
-        if (c == '.') or (c == '#'):
+        if c == '.' or c == '#':
             flag = True
-        if (c == ';'):
+        if c == ';':
             flag = False
             found = ''
-        if (c == '{') or (c == ','):
+        if c == '{' or c == ',':
             if len(found) > 0:
                 if match(pattern, found):
                     count += 1
