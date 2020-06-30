@@ -26,7 +26,7 @@ def clean(u, fn, fc):
 
             # open new file to write
             with open(new, 'w') as newF:
-                soloFlag, mediaFlag, multiFlag, newline = False, False, False, False
+                soloFlag, multiFlag, newline = False, False, False
                 for num, line in enumerate(f, 1):
                     # if haven't yet removed all items
                     if index < numItems[i]:
@@ -52,9 +52,6 @@ def clean(u, fn, fc):
                             line = ' '.join(l) + '\n'
                             index += 1
                             multiFlag = False
-                        # if media query opening
-                        if line[:6] == '@media':
-                            mediaFlag = True
                         # if one rule
                         if soloFlag:
                             for c in line:
@@ -67,7 +64,7 @@ def clean(u, fn, fc):
                             if not newline or line != '\n':
                                 newF.write(line)
                             newline = True if line == '\n' else False
-                # bandage, add closing brace to media query
-                if mediaFlag:
-                    newF.write('}')
+                    # if all items removed, just print rest of file
+                    else:
+                        newF.write(line)
             newF.close()
