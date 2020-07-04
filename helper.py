@@ -68,3 +68,9 @@ def solo(line):
 # removes comma if last character of string
 def comma(w):
     return w[:-1] if w[-1:] == ',' else w
+
+# look up html file in dictionary of html and css files
+def lookup(d, f):
+    for h, c in d.items():
+        if h == f:
+            return c

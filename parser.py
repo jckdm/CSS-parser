@@ -61,7 +61,7 @@ def parse_css():
 def parse_html():
     # obtain filename/path
     filepath = intro('html')
-    cl, id, fc = [], [], 0
+    cl, id, css, fc = [], [], {}, 0
 
     # read each file
     for file in glob(filepath):
@@ -82,20 +82,28 @@ def parse_html():
                     # found a class
                     elif piece[:5] == 'class':
                         start, found = 7, '.'
+                    # found a link
+                    elif piece[:4] == 'href':
+                        start = 6
                     if start:
                         for char in piece[start:]:
                             if char != "'" and char != '"':
                                 found += char
-                            # at end of rule name
+                            # at end, marked by quotes
                             else:
                                 if start == 4:
                                     id[fc][found] = file
                                 elif start == 7:
                                     cl[fc][found] = file
+                                # if link to .css file
+                                elif start == 6 and found[-4:] == '.css':
+                                    # css.append(file + ' ' + found)
+                                    if file not in css:
+                                        css[file] = found
                                 break
         fc += 1
 
     if not cl and not id:
         exit('No .html files in this directory!')
     else:
-        return (cl, id)
+        return ((cl, id), css)

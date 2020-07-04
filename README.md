@@ -7,8 +7,8 @@
 2. prints undefined classes and IDs, corresponding files
 3. prints unused classes and IDs, corresponding files and line numbers
 4. re-writes .css files without unused classes and IDs
+5. defines previously undefined style rules in .css files
 
 TODO:
 
-0. thoroughly edgecase re-writing stage
-1. add functionality to write empty style rules for undefined rules?
+0. thoroughly edge-case re-writing stage
