@@ -65,27 +65,32 @@ def main():
     if not final:
         o = 'No unused classes nor IDs!'
         print(o)
-        resuls += i
-    else:
+        results += i
+    if final:
         q = input('\nMay I remove these unused rules and output new .css files? (yes/no): ')
         if q.lower() in ('yes', 'y'):
             clean(final, fileNames, fileCount)
-        if undefined:
-            qq = input('May I add definitions for undefined rules? (yes/no): ')
-            if qq.lower() in ('yes', 'y'):
-                define(undefined, h[1])
-            elif qq.lower() in ('no', 'n'):
-                qqq = input('Would you instead like a .txt file with your results? (yes/no): ')
-                if qqq.lower() in ('yes', 'y'):
-                    with open('results.txt', 'w') as f:
-                        f.write(results)
-                        print('Wrote results.txt')
-                elif qqq.lower() in ('no', 'n'):
-                    exit('Thank you.')
-                else:
-                    exit('Invalid response.')
-            else:
-                exit('Invalid response.')
+    if not undefined:
+        o = 'No undefined classes nor IDs!'
+        print(o)
+        results += i
+    if undefined:
+        qq = input('May I add definitions for undefined rules? (yes/no): ')
+        if qq.lower() in ('yes', 'y'):
+            define(undefined, h[1])
+
+    if q.lower() in ('no', 'n') and qq.lower() in ('no', 'n'):
+        qqq = input('Would you instead like a .txt file with your results? (yes/no): ')
+        if qqq.lower() in ('yes', 'y'):
+            with open('results.txt', 'w') as f:
+                f.write(results)
+                print('Wrote results.txt')
+        elif qqq.lower() in ('no', 'n'):
+            exit('Thank you.')
+        else:
+            exit('Invalid response.')
+    else:
+        exit('Thank you.')
 
 if __name__ == '__main__':
     main()

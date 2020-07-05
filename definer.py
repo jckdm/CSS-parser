@@ -6,6 +6,8 @@ def define(un, cf):
     for rule, file in un.items():
         # get name of css file
         css = lookup(cf, file)
+        if not path.isfile(css):
+            exit(f'Sorry, {css} is not a valid filepath.')
         # if already cleaned, open new file
         newF = css[:-4] + '-clean.css'
         css = css if not path.isfile(newF) else newF

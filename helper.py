@@ -40,7 +40,7 @@ def remove_dups(d):
 # determine if line has one or multiple rules
 def solo(line):
     pattern = '(\.|\#)-?[_a-zA-Z]+[_a-zA-Z0-9-]*'
-    flag, found, count = False, '', 0
+    flag, end, found, count = False, False, '', 0
     for c in line:
         # found a rule
         if c == '.' or c == '#':
@@ -54,12 +54,14 @@ def solo(line):
             if len(found) > 0:
                 if match(pattern, found):
                     count += 1
+        if c == '{':
+            end = True
         if flag:
             found += c
+    if match(pattern, found) and not end:
+        count += 1
     # single rule
     if count == 0 or count == 1:
-        if match(pattern, found):
-            count += 1
         return True
     # multiple rules
     elif count > 1:
