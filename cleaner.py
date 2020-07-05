@@ -2,39 +2,36 @@ from helper import solo, comma
 
 def clean(u, fn, fc):
     # pre-populate arrays
-    nums, rules, numItems = [[]] * fc, [[]] * fc, [0] * fc
+    nums, rules = [[] for _ in range(fc)], [[] for _ in range(fc)]
 
     # extract line numbers, filenames
     for key, value in u.items():
         k, v = key.split(), value.split()[2:]
-        rule = k[0]
-        ind = fn.index(k[2])
-        # for each line number
-        for i in range(len(v)):
-            # append line numbers
-            nums[ind].append(int(comma(v[i])))
-            if rule not in rules[ind]:
-                # and rules to remove, by file
-                rules[ind].append(rule)
-            numItems[ind] += 1
+        rule, ind = k[0], fn.index(k[2])
+        if rule not in rules[ind]:
+            rules[ind].append(rule)
+        for lineNum in v:
+            n = int(comma(lineNum))
+            if n not in nums[ind]:
+                nums[ind].append(n)
 
     # for each file
     for i in range(fc):
-        # sort by line number
+        # sort line numbers
         nums[i].sort()
-        index, file = 0, fn[i]
+        file = fn[i]
         with open(file) as f:
             new = file[:-4] + '-clean.css'
-            print(f'Wrote {new}')
-
             # open new file to write
             with open(new, 'w') as newF:
-                soloFlag, multiFlag, newline, totalFlag = False, False, False, False
+                soloFlag, multiFlag, newline, totalFlag, end = False, False, False, False, False
                 for num, line in enumerate(f, 1):
-                    # if haven't yet removed all items
-                    if index < numItems[i]:
+                    # if haven't seen all problem lines
+                    if nums[i]:
                         # if line has an unused rule
-                        if num == nums[i][index]:
+                        if num == nums[i][0]:
+                            # remove line num about to be cleaned
+                            del nums[i][0]
                             x = solo(line)
                             soloFlag = x
                             multiFlag = not(x)
@@ -46,7 +43,6 @@ def clean(u, fn, fc):
                                 # replace unused rules with ?
                                 if comma(l[x]) in rules[i]:
                                     l[x] = '?'
-                                    index += 1
                             # now remove those elements, update length
                             l = [e for e in l if e != '?']
                             ll = len(l)
@@ -67,16 +63,20 @@ def clean(u, fn, fc):
                                 # ignore until rule closes
                                 if c == '}':
                                     soloFlag = False
+                                    # if all rules were removed from line
                                     if totalFlag:
                                         totalFlag = False
-                                    else:
-                                        index += 1
                         elif not soloFlag:
                             # add newlines, but never more than 1
                             if not newline or line != '\n':
                                 newF.write(line)
                             newline = True if line == '\n' else False
-                    # if all items removed, just print rest of file
+                    # all rules removed, print line
                     else:
-                        newF.write(line)
+                        for c in line:
+                            if end:
+                                newF.write(c)
+                            if c == '}':
+                                end = True
+            print(f'Wrote {new}')
             newF.close()

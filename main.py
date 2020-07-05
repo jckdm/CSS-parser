@@ -62,6 +62,8 @@ def main():
         print(o)
         results += '\n' + o
 
+    # predefined in case file is already clean
+    q, qq = 'no', 'no'
     if not final:
         o = 'No unused classes nor IDs!'
         print(o)
