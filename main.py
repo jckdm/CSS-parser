@@ -9,17 +9,19 @@ def main():
     h = parse_html()
     unused, undefined, results, fileNames, css, fileCount = {}, {}, '', [], [], 0
 
-    # identify unused classes
+    # identify UNUSED classes
     for cla, num in c[0][0].items():
         x = cla.split()
+        # no psuedoclasses allowed
         if ':' not in x[0]:
             css.append(x[0])
         if x[0] not in h[0][0][0]:
             unused[cla] = num
 
-    # identify unused IDs
+    # identify UNUSED IDs
     for ID, num in c[1][0].items():
         y = ID.split()
+        # no psuedoclasses allowed
         if ':' not in y[0]:
             css.append(y[0])
         if y[0] not in h[0][1][0]:
@@ -29,7 +31,7 @@ def main():
     print('\n' + i)
     results += i
 
-    # identify undefined classes and IDs
+    # identify UNDEFINED classes and IDs
     for d in h[0]:
         for dd in d:
             for rule, file in dd.items():
@@ -41,17 +43,23 @@ def main():
                     results += '\n' + o
     print()
     results += '\n'
+
+    # copy to allow deleting
     final = dict(unused)
 
     # identify pseudoclasses
     for rule, num in unused.items():
         z = rule.split()
-        if z[2] not in fileNames:
-            fileNames.append(z[2])
+        r, fn = z[0], z[2]
+        # get filenames
+        if fn not in fileNames:
+            fileNames.append(fn)
             fileCount += 1
-        if ':' in z[0]:
-            zz = z[0].split(':')
-            if zz[0] + ' : ' + z[2] not in unused:
+        # if pseudoclass
+        if ':' in r:
+            rr = r.split(':')[0]
+            # if rule exists and isn't unused
+            if rr in css and rr + ' : ' + fn not in unused:
                 del final[rule]
                 continue
         o = ''

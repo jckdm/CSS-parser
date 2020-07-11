@@ -71,7 +71,7 @@ def clean(u, fn, fc):
                             if not newline or line != '\n':
                                 newF.write(line)
                             newline = True if line == '\n' else False
-                    # all rules removed, print line
+                    # hack: remove definition of last rule
                     else:
                         for c in line:
                             if end:

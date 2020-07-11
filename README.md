@@ -11,6 +11,4 @@
 
 TODO:
 
-0. thoroughly edge-case re-writing stage
-1. psuedo-class debugging, if class doesn't exist
-2. media queries :-/
+0. fix handling of media queries :-/

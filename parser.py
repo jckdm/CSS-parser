@@ -11,8 +11,6 @@ def parse_css():
     # read each file
     for file in glob(filepath):
         with open(file) as f:
-            print(f'Read {file}')
-
             for num, line in enumerate(f, 1):
                 for c in line:
                     # found a rule
@@ -20,8 +18,7 @@ def parse_css():
                         flag = True
                     # nevermind
                     if c == ';':
-                        flag = False
-                        found = ''
+                        flag, found = False, ''
                     # rule is ending
                     if c == '{' or c == ',':
                         if len(found) > 0:
@@ -52,6 +49,7 @@ def parse_css():
                             found = ''
                     if flag:
                         found += c
+        print(f'Read {file}')
 
     if not classes and not ids:
         exit('No .css files in this directory!')
@@ -66,7 +64,6 @@ def parse_html():
     # read each file
     for file in glob(filepath):
         with open(file) as f:
-            print(f'Read {file}')
             # append a dict for each file
             cl.append({})
             id.append({})
@@ -97,10 +94,10 @@ def parse_html():
                                     cl[fc][found] = file
                                 # if link to .css file
                                 elif start == 6 and found[-4:] == '.css':
-                                    # css.append(file + ' ' + found)
                                     if file not in css:
                                         css[file] = found
                                 break
+        print(f'Read {file}')
         fc += 1
 
     if not cl and not id:
