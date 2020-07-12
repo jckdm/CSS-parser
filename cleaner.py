@@ -1,4 +1,4 @@
-from helper import solo, comma
+from helper import solo, comma, full
 
 def clean(u, fn, fc):
     # pre-populate arrays
@@ -25,6 +25,7 @@ def clean(u, fn, fc):
             # open new file to write
             with open(new, 'w') as newF:
                 soloFlag, multiFlag, newline, totalFlag, end = False, False, False, False, False
+                # for each line
                 for num, line in enumerate(f, 1):
                     # if haven't seen all problem lines
                     if nums[i]:
@@ -32,13 +33,16 @@ def clean(u, fn, fc):
                         if num == nums[i][0]:
                             # remove line num about to be cleaned
                             del nums[i][0]
-                            x = solo(line)
-                            soloFlag = x
-                            multiFlag = not(x)
+                            # how many rules are on this line?
+                            soloFlag = solo(line)
+                            multiFlag = not(soloFlag)
+                            # is the entire rule defined on this line?
+                            y = full(line)
                         # if multiple rules
                         if multiFlag:
                             l = line.split()
                             ll = len(l)
+                            # loop thru words in rule header
                             for x in range(ll):
                                 # replace unused rules with ?
                                 if comma(l[x]) in rules[i]:
@@ -55,6 +59,7 @@ def clean(u, fn, fc):
                             else:
                                 soloFlag = True
                                 totalFlag = True
+                            # re-assemble line from list
                             line = ' '.join(l) + '\n'
                             multiFlag = False
                         # if one rule
@@ -71,12 +76,17 @@ def clean(u, fn, fc):
                             if not newline or line != '\n':
                                 newF.write(line)
                             newline = True if line == '\n' else False
-                    # hack: remove definition of last rule
-                    else:
+                    # remove definition of last rule, unless it was all on one line
+                    elif not nums[i] and not end and not y:
                         for c in line:
                             if end:
                                 newF.write(c)
+                            # keep reading until definition ends
                             if c == '}':
                                 end = True
+                    # no need to examine char at a time
+                    else:
+                        newF.write(line)
+
             print(f'Wrote {new}')
             newF.close()

@@ -6,7 +6,8 @@ from re import match
 def parse_css():
     # obtain filename/path
     filepath = intro('css')
-    classes, ids, found, flag = {}, {}, '', False
+    classes, ids = {}, {}
+    found, flag, op, close = '', False, 0, 0
 
     # read each file
     for file in glob(filepath):

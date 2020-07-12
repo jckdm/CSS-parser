@@ -7,7 +7,8 @@ def main():
     # parse the files
     c = parse_css()
     h = parse_html()
-    unused, undefined, results, fileNames, css, fileCount = {}, {}, '', [], [], 0
+    unused, undefined, fileNames, css = {}, {}, [], []
+    results, fileCount = '', 0
 
     # identify UNUSED classes
     for cla, num in c[0][0].items():
@@ -77,6 +78,7 @@ def main():
         print(o)
         results += i
     if final:
+        # may i clean?
         q = input('\nMay I remove these unused rules and output new .css files? (yes/no): ')
         if q.lower() in ('yes', 'y'):
             clean(final, fileNames, fileCount)
@@ -85,10 +87,12 @@ def main():
         print(o)
         results += i
     if undefined:
+        # may i define?
         qq = input('May I add definitions for undefined rules? (yes/no): ')
         if qq.lower() in ('yes', 'y'):
             define(undefined, h[1])
 
+    # no cleaning, but maybe a humble .txt file?
     if q.lower() in ('no', 'n') and qq.lower() in ('no', 'n'):
         qqq = input('Would you instead like a .txt file with your results? (yes/no): ')
         if qqq.lower() in ('yes', 'y'):

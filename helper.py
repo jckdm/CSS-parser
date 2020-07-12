@@ -76,3 +76,8 @@ def lookup(d, f):
     for h, c in d.items():
         if h == f:
             return c
+
+def full(l):
+    if '{' in l and '}' in l:
+        return True
+    return False
